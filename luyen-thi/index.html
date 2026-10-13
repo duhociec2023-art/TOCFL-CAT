@@ -394,7 +394,7 @@ function sendResult(R,all){if(!SHEET_URL||S.sent)return;S.sent=true;
   const wrong=all.filter(h=>!h.ok).map(h=>{const it=h.item;
     return `${SEC[it.s].vi} ${it.ty} ${LV[it.lv].split(" ")[0]} [${it.id}] · 「${stemOf(it,true)}」${isVi(it.q)?"":" "+it.q} → ${h.chosen===null?"bỏ trống":"chọn "+optText(it,h.chosen)} (đúng: ${optText(it,0)})`}).join("\n");
   const d={sheet:SHEET_NAME,cols:[["Họ tên",S.name||"(không tên)"],["Độ dài",LENGTH[S.lenKey].name],["Xuất phát",BANDS[S.startBand].name],
-    ...secCols("L"),...secCols("R"),["Theo dạng bài",byType],["Hết giờ?",S.secs.filter(s=>S.timeUp[s]).map(s=>SEC[s].vi).join(", ")||"Không"],["Các câu sai",wrong]]};
+    ...secCols("L"),...secCols("R"),["Theo dạng bài",byType],["Hết giờ?",S.secs.filter(s=>S.timeUp[s]).map(s=>SEC[s].vi).join(", ")||"Không"],["Các câu sai",wrong],["Email",(window.SiteUser&&SiteUser.get()&&SiteUser.get().email)||""]]};
   const st=document.getElementById("sendst");
   fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)})
     .then(()=>{if(st)st.textContent="✓ Đã gửi kết quả cho giáo viên."})
@@ -462,6 +462,6 @@ function pracSummary(){stopAll();stepEl.textContent="Tổng kết luyện tập"
 
 home();
 </script>
-<script src="assets/site.js" data-page="luyen-thi" data-foot="0"></script>
+<script src="assets/site.js" data-page="luyen-thi" data-foot="0" data-login="required"></script>
 </body>
 </html>

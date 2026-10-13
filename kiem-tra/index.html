@@ -436,7 +436,7 @@ function sendResult(all,minutes,sc){if(!SHEET_URL||S.sent)return;S.sent=true;
     ["Nghe /50",sc.pL],["Mức Nghe",secLevel(S.secs.L.hist)],["Nghe đúng",right("L")],
     ["Đọc /50",sc.pR],["Mức Đọc",secLevel(S.secs.R.hist)],["Đọc đúng",right("R")],
     ["L1",les(1)],["L2",les(2)],["L3",les(3)],["L4",les(4)],["L5",les(5)],
-    ["Số phút làm",minutes],["Hết giờ?",S.timeUp?"Có":"Không"],["Các câu sai",wrong]]};
+    ["Số phút làm",minutes],["Hết giờ?",S.timeUp?"Có":"Không"],["Các câu sai",wrong],["Email",(window.SiteUser&&SiteUser.get()&&SiteUser.get().email)||""]]};
   const st=document.getElementById("sendst");
   fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)})
     .then(()=>{if(st)st.textContent="✓ Đã gửi kết quả cho giáo viên."})
@@ -445,6 +445,6 @@ function sendResult(all,minutes,sc){if(!SHEET_URL||S.sent)return;S.sent=true;
 reset();intro();
 </script>
 
-<script src="../assets/site.js" data-page="kiem-tra" data-foot="0"></script>
+<script src="../assets/site.js" data-page="kiem-tra" data-foot="0" data-login="required"></script>
 </body>
 </html>
