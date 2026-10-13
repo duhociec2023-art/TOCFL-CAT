@@ -284,7 +284,7 @@ function examSetup(){const box=document.getElementById("opts");
     <div class="row"><button class="primary" id="go">Bắt đầu thi thử</button></div></div>`;
   const rules=()=>{const L=LENGTH[val("len")],secs=val("secs");
     document.getElementById("rules").innerHTML=[
-      secs.includes("L")?`<li><b>Nghe</b>: ${L.L.n} câu, ${L.L.min} phút. Mỗi câu chỉ phát <b>1 lần</b>; nghe xong có <b>${ANSWER_SECONDS} giây</b> để chọn, hết giờ tự sang câu sau.</li>`:"",
+      secs.includes("L")?`<li><b>Nghe</b>: ${L.L.n} câu, ${L.L.min} phút. Bấm nút để nghe, mỗi câu chỉ nghe được <b>1 lần</b>; nghe xong có <b>${ANSWER_SECONDS} giây</b> để chọn, hết giờ tự sang câu sau.</li>`:"",
       secs.includes("R")?`<li><b>Đọc</b>: ${L.R.n} câu, ${L.R.min} phút.${val("len")==="full"?` Làm dưới ${READING_MIN_ITEMS} câu thì điểm bị giảm theo tỉ lệ, nên phân bổ thời gian.`:""}</li>`:"",
       `<li>Máy chọn câu theo trình độ của bạn: đúng thì câu sau khó hơn, sai thì dễ hơn. Câu có thể thuộc bất kỳ cấp nào.</li>`,
       `<li>Không quay lại câu trước được. Câu bỏ trống tính là sai.</li>`].join("")};
@@ -324,7 +324,7 @@ function nextExam(){const sec=S.sec,hist=S.hist[sec];
 
 function renderExam(){const it=S.cur.item,sec=S.sec,n=S.hist[sec].length+1,N=S.len[sec].n;
   stepEl.textContent=`${SEC[sec].vi} · ${n}/${N}`;
-  const listenBox=`<div class="play"><button class="ghost" id="pl" hidden>▶ Nghe</button><span class="small muted" id="pst">Đang phát…</span><span class="count" id="cd" hidden></span>
+  const listenBox=`<div class="play"><button class="primary" id="pl">▶ Bấm để nghe (1 lần)</button><span class="small muted" id="pst" hidden></span><span class="count" id="cd" hidden></span>
      ${!canSpeak(it)?`<span class="notice">Thiết bị này không đọc được tiếng Trung. Hãy dùng Chrome/Edge trên máy tính, hoặc nhờ giáo viên đọc. <button class="ghost" id="tr" style="padding:4px 10px;margin-left:4px">Hiện lời thoại</button></span>`:""}</div>
      ${cast(it.a||[])}<div class="transcript" id="tx" hidden>${it.s==="L"?transcript(it):""}</div>`;
   app.innerHTML=`<section class="card">${headBar(it,`<span class="meter">${meter(Math.round(Math.min(8,Math.max(1,S.theta))))}</span>`)}
@@ -336,7 +336,7 @@ function renderExam(){const it=S.cur.item,sec=S.sec,n=S.hist[sec].length+1,N=S.l
     const pl=document.getElementById("pl"),pst=document.getElementById("pst");
     const play=()=>{pl.hidden=true;pst.hidden=false;pst.textContent="Đang phát…";speak(it,()=>{pst.textContent="Đã phát xong, hãy chọn đáp án";startCountdown()})};
     pl.onclick=play;
-    if(canSpeak(it))setTimeout(()=>{if(S&&S.cur&&S.cur.item===it)play()},500);else pst.hidden=true}}
+    if(!canSpeak(it))pl.hidden=true}}
 
 function startCountdown(){if(S.cd)return;let left=ANSWER_SECONDS;const el=document.getElementById("cd");if(!el)return;
   el.hidden=false;el.textContent=`⏱ ${left}s`;
@@ -457,7 +457,7 @@ function renderPrac(){const it=S.cur.item,n=S.i+1,N=S.list.length,right=S.hist.f
   document.getElementById("end").onclick=()=>{stopAudio();pracSummary()};
   if(it.s==="L"){const pl=document.getElementById("pl");pl.onclick=()=>{pl.disabled=true;speak(it,()=>{pl.disabled=false})};
     document.getElementById("trb").onclick=e=>{const tx=document.getElementById("tx");tx.hidden=!tx.hidden;e.target.textContent=tx.hidden?"Hiện lời thoại":"Ẩn lời thoại"};
-    if(canSpeak(it))setTimeout(()=>{if(S&&S.cur&&S.cur.item===it)pl.click()},400)}}
+  }}
 
 function checkPrac(){const it=S.cur.item,ok=S.choice===0;S.checked=true;S.hist.push({item:it,chosen:S.choice,ok});
   app.querySelectorAll(".opt").forEach(b=>{const i=+b.dataset.i;b.disabled=true;if(i===0)b.classList.add("right");else if(i===S.choice)b.classList.add("wrong")});
