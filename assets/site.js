@@ -21,7 +21,7 @@
   head.innerHTML =
     '<div class="in">' +
     '<a class="site-logo" href="' + root + '"><span class="mk" aria-hidden="true">學</span>' +
-    "<span><b>Tiếng Trung Phồn Thể TOCFL</b><small>cùng Linn Vu</small></span></a>" +
+    "<span><b>Tiếng Trung Phồn Thể TOCFL</b></span></a>" +
     '<nav class="site-nav" aria-label="Menu chính">' + links + "</nav></div>";
   document.body.prepend(head);
 
@@ -29,7 +29,7 @@
     var foot = document.createElement("footer");
     foot.className = "site-foot";
     foot.innerHTML =
-      '<div class="in"><span>Tiếng Trung Phồn Thể TOCFL · cùng Linn Vu</span>' +
+      '<div class="in"><span>Tiếng Trung Phồn Thể TOCFL</span>' +
       '<span>Tư vấn du học Đài Loan: <a href="https://www.duhociec.site/" target="_blank" rel="noopener">duhociec.site</a></span></div>';
     document.body.append(foot);
   }
