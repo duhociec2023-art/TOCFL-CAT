@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kho đề TOCFL CAT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Cùng design system với Mini-CAT (tocfl-l1-5): một cột đề thi hẹp, dải trên cùng có phần thi, số câu và đồng hồ. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#18202b; --muted:#5a6575; --line:#d5dbe3;
+  --accent:#2f4b8f; --accent-soft:#e4e9f5; --gold:#d9a441;
+  --ok:#1f7a4d; --ok-soft:#e2f2e9; --bad:#c0392b; --bad-soft:#f7e3e3;
+  --f-ui:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-zh:"Noto Serif TC","PingFang TC","Microsoft JhengHei",serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --surface:#1b212b; --ink:#e7ebf1; --muted:#9aa5b5; --line:#2e3644;
+  --accent:#8fa8e6; --accent-soft:#25304a; --gold:#d9ad55;
+  --ok:#5cc28f; --ok-soft:#173226; --bad:#e57b7b; --bad-soft:#3a1f22; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --surface:#1b212b; --ink:#e7ebf1; --muted:#9aa5b5; --line:#2e3644;
+  --accent:#8fa8e6; --accent-soft:#25304a; --gold:#d9ad55;
+  --ok:#5cc28f; --ok-soft:#173226; --bad:#e57b7b; --bad-soft:#3a1f22; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.6}
+[hidden]{display:none!important}
+.wrap{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:16px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.02em}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.hud{display:flex;gap:12px;align-items:center}
+.step{font-family:var(--f-num);font-size:13px;color:var(--muted)}
+.clock{font-family:var(--f-num);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;padding:3px 10px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.clock.warn{background:var(--bad-soft);color:var(--bad)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+h1,h2{margin:0;text-wrap:balance;line-height:1.3}
+h1{font-size:24px} h2{font-size:18px}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+ul.rules{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+input[type=text]{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid transparent;padding:11px 18px;font-weight:600}
+button:focus-visible,.opt:focus-visible,.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.primary{background:var(--accent);color:var(--surface)}
+.primary:disabled{opacity:.4;cursor:not-allowed}
+.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.ghost:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+/* nút chọn dạng viên thuốc */
+.field{display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--line);border-radius:99px;font-size:14px;cursor:pointer;background:var(--surface)}
+.seg span b{font-family:var(--f-num);font-weight:500;font-size:12px;color:var(--muted)}
+.seg input:checked+span{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.seg input:disabled+span{opacity:.4;cursor:not-allowed}
+.zh{font-family:var(--f-zh)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modes label{position:relative}
+.modes input{position:absolute;opacity:0;pointer-events:none}
+.modes span{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;height:100%}
+.modes span b{font-size:16px}
+.modes span i{font-style:normal;font-size:13px;color:var(--muted)}
+.modes input:checked+span{border-color:var(--accent);background:var(--accent-soft)}
+.modes input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:440px){.modes{grid-template-columns:1fr}}
+/* thước độ khó 8 bậc */
+.meter{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.steps{display:flex;align-items:flex-end;gap:2px}
+.steps i{display:block;width:7px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--gold)}
+.passage{font-family:var(--f-zh);font-size:18px;line-height:1.9;background:var(--bg);border-radius:8px;padding:14px 16px;white-space:pre-line}
+.passage u{text-decoration-thickness:2px;text-underline-offset:4px}
+.figure{display:flex;justify-content:center;background:var(--bg);border-radius:8px;padding:10px}
+.figure svg{width:240px;max-width:100%;height:auto}
+.q{font-family:var(--f-zh);font-size:19px;font-weight:700}
+.q.qv{font-family:var(--f-ui);font-size:16px;font-weight:600}
+.cast{font-size:13px;color:var(--muted);margin:0}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts.pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-family:var(--f-zh);font-size:18px;font-weight:500;padding:12px 14px;min-width:0}
+.opts.pics .opt{flex-direction:column;gap:6px;padding:10px 6px}
+.opts.pics .opt svg{width:100%;max-width:120px;height:auto}
+.opt .k{font-family:var(--f-num);font-size:13px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--muted)}
+.opt[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-pressed=true] .k{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .k{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+/* hình minh họa (pics.js) */
+.pic *{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pic .f{fill:var(--accent-soft)} .pic .a{fill:var(--accent)} .pic .g{fill:var(--gold)} .pic .r{fill:var(--bad)} .pic .w{fill:var(--surface)}
+.pic text{fill:var(--ink);stroke:none;font:600 13px var(--f-num)}
+.pic text.z{font-family:var(--f-zh);font-weight:700}
+.pic text.lt{fill:var(--surface)}
+.play{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.count{font-family:var(--f-num);font-size:14px;font-weight:600;padding:3px 10px;border-radius:6px;background:var(--bad-soft);color:var(--bad)}
+.notice{font-size:13px;background:var(--bad-soft);color:var(--ink);border-radius:8px;padding:10px 12px}
+.transcript{font-family:var(--f-zh);font-size:17px;line-height:1.8;border-left:3px solid var(--line);padding-left:12px}
+.feedback{border-radius:8px;padding:12px 14px;font-size:14px;display:flex;flex-direction:column;gap:6px}
+.feedback.ok{background:var(--ok-soft)} .feedback.bad{background:var(--bad-soft)}
+.feedback b{font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.big{font-family:var(--f-num);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.pill.zh{font-size:13px}
+svg.trace{width:100%;height:auto;max-width:100%}
+.trace .grid{stroke:var(--line);stroke-width:1}
+.trace .path{fill:none;stroke:var(--accent);stroke-width:2}
+.trace .dot-ok{fill:var(--ok)} .trace .dot-bad{fill:var(--surface);stroke:var(--bad);stroke-width:2}
+.trace text{fill:var(--muted);font-family:var(--f-num);font-size:10px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+td.zht{font-family:var(--f-zh)}
+.barcell{display:flex;align-items:center;gap:8px}
+.hbar{flex:1;height:6px;background:var(--line);border-radius:3px;min-width:60px;overflow:hidden}
+.hbar span{display:block;height:100%;background:var(--accent)}
+details{border-top:1px solid var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:600}
+.rev{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.rev>div{font-size:14px;padding:10px 12px;border-radius:8px;background:var(--bg)}
+.rev .zhs{font-family:var(--f-zh);font-size:16px}
+.tag-ok{color:var(--ok);font-weight:600}.tag-bad{color:var(--bad);font-weight:600}
+@media (prefers-reduced-motion:no-preference){.card{animation:in .25s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bar">
+    <div class="brand">Kho đề TOCFL CAT<small>Nghe + Đọc · 準備級 → 精通級</small></div>
+    <div class="hud"><span class="step" id="step"></span><span class="clock" id="clock" hidden></span></div>
+  </div>
+  <main id="app"></main>
+</div>
+
+<script>window.TOCFL={items:[],audio:new Set(),add(a){this.items.push(...a)}};</script>
+<script src="pics.js"></script>
+<script src="bank/novice.js"></script>
+<script src="bank/a.js"></script>
+<script src="bank/b.js"></script>
+<script src="bank/c.js"></script>
+<script src="audio/index.js" onerror="void 0"></script>
+<script>
+/* =================== CẤU HÌNH (sửa ở đây) =================== */
+// 8 bậc của TOCFL. Câu hỏi trong ngân hàng ghi bậc ở trường lv (1–8).
+const LV={1:"準備一級",2:"準備二級",3:"入門級 A1",4:"基礎級 A2",5:"進階級 B1",6:"高階級 B2",7:"流利級 C1",8:"精通級 C2"};
+const BANDS={N:{name:"準備級 Novice",lv:[1,2]},A:{name:"Band A",lv:[3,4]},B:{name:"Band B",lv:[5,6]},C:{name:"Band C",lv:[7,8]}};
+const bandOf=lv=>Object.keys(BANDS).find(b=>BANDS[b].lv.includes(lv));
+// Điểm đạt từng bậc của bài thi thích ứng (thang 700), theo trang 通過標準 của 華測會.
+const CUT={L:[190,295,355,435,480,555,600,655],R:[195,305,355,450,490,570,610,690]};
+// Thi thật: Nghe ~35 câu/50 phút, Đọc ~35 câu/60 phút. Bản rút gọn để luyện nhanh trên lớp.
+const LENGTH={full:{name:"Đầy đủ (như thi thật)",L:{n:35,min:50},R:{n:35,min:60}},
+              short:{name:"Rút gọn",L:{n:20,min:25},R:{n:20,min:30}}};
+const ANSWER_SECONDS=10;       // Nghe: nghe xong có 10 giây để chọn, hết giờ tự sang câu sau (như thi thật)
+const READING_MIN_ITEMS=25;    // Đọc: làm ít hơn 25 câu thì điểm bị giảm theo tỉ lệ (như thi thật)
+const SEC={L:{zh:"聽力",vi:"Nghe"},R:{zh:"閱讀",vi:"Đọc"}};
+const TYPES={L:["看圖回答","問答理解","對話","段落"],R:["單句理解","看圖釋義","選詞填空","完成段落","閱讀理解"]};
+const TYPE_VI={"看圖回答":"Nhìn hình, nghe câu hỏi","問答理解":"Nghe câu hỏi, chọn câu đáp","對話":"Nghe hội thoại","段落":"Nghe đoạn nói dài",
+  "單句理解":"Hiểu nghĩa một câu","看圖釋義":"Nhìn hình chọn câu đúng","選詞填空":"Chọn từ điền chỗ trống","完成段落":"Chọn câu hoàn thành đoạn văn","閱讀理解":"Đọc hiểu"};
+const SHEET_URL="https://script.google.com/macros/s/AKfycbxJLHZgKhpOgP4l6VUuWDy-IHvLnzrfiKvjBL6ZwrCstAoewt_Xqz-Np-w8xgPDkDfBQw/exec"; // cùng Apps Script với Mini-CAT; để trống = không gửi
+const SHEET_NAME="Thi thử TOCFL";
+const START={N:1.5,A:3.5,B:5.5,C:7.5};   // năng lực ban đầu theo trình độ học viên tự chọn
+
+/* =================== NGÂN HÀNG =================== */
+// Quy ước: phương án đúng luôn viết đầu tiên (o[0]); khi hiển thị sẽ xáo thứ tự.
+const BANK=TOCFL.items.map((x,i)=>({...x,ix:i}));
+const isVi=s=>/[a-zA-Zà-ỹÀ-Ỹ]/.test(s.replace(/[A-D]\b/g,""));
+
+/* =================== CHẤM ĐIỂM ===================
+   Mô hình IRT (Rasch): độ khó câu b = bậc lv (1–8). P(đúng) = 1/(1+e^(-1.3(θ−b))).
+   θ = giá trị khớp nhất với chuỗi đúng/sai (có kéo nhẹ về điểm xuất phát để ổn định khi mới làm vài câu).
+   Đổi θ sang thang 700 bằng cách nối thẳng các mốc đạt: θ = k ứng với điểm đạt bậc k. */
+const A_DISC=1.3;
+function theta(h,start){let best=start,bl=-1e9;
+  for(let t=0;t<=9.0001;t+=0.05){let l=-((t-start)**2)/(2*2.2*2.2);
+    for(const x of h){const p=1/(1+Math.exp(-A_DISC*(t-x.item.lv)));l+=Math.log(x.ok?p:1-p)}
+    if(l>bl){bl=l;best=t}}return best}
+function score700(sec,t){const pts=[[0,100],...CUT[sec].map((c,i)=>[i+1,c]),[9,700]];
+  for(let i=1;i<pts.length;i++)if(t<=pts[i][0]){const[x0,y0]=pts[i-1],[x1,y1]=pts[i];return Math.round(y0+(y1-y0)*(t-x0)/(x1-x0))}
+  return 700}
+const passed=(sec,sc)=>{let k=0;CUT[sec].forEach((c,i)=>{if(sc>=c)k=i+1});return k};
+
+/* =================== TIỆN ÍCH =================== */
+const app=document.getElementById("app"),stepEl=document.getElementById("step"),clockEl=document.getElementById("clock");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const meter=lv=>`<span class="steps" aria-hidden="true">${[1,2,3,4,5,6,7,8].map(n=>`<i class="${n<=lv?"on":""}" style="height:${4+n*2}px"></i>`).join("")}</span>`;
+const optText=(it,i)=>it.po?PICS.alt(it.o[i]):it.o[i];
+// đoạn văn: [[...]] = gạch chân (dùng cho 單句理解)
+const fmt=s=>esc(s).replace(/\[\[(.+?)\]\]/g,"<u>$1</u>");
+const plain=s=>String(s).replace(/\[\[(.+?)\]\]/g,"$1");
+const seg=(name,opts,val)=>`<div class="seg" role="radiogroup">${opts.map(([v,l,dis])=>`<label><input type="radio" name="${name}" value="${v}"${v===val?" checked":""}${dis?" disabled":""}><span>${l}</span></label>`).join("")}</div>`;
+const val=name=>{const el=app.querySelector(`input[name="${name}"]:checked`);return el?el.value:null};
+
+/* =================== ÂM THANH ===================
+   1) Có file thu âm audio/<id>.mp3 (liệt kê trong audio/index.js) thì phát file.
+   2) Không có thì dùng giọng đọc tiếng Trung của máy. Người nói ghi "男"/"女" trong ngân hàng. */
+const synth=window.speechSynthesis||null;let voiceF=null,voiceM=null;
+const MALE_RE=/zhiwei|yunjhe|kangkang|yunxi|yunjian|yunyang|yunze|yunhao|li-?mu|male|男/i;
+const FEMALE_RE=/hanhan|yating|hsiaochen|hsiaoyu|mei-?jia|huihui|yaoyao|xiaoxiao|xiaoyi|ting-?ting|lili|female|女|google/i;
+function pickVoice(){if(!synth)return;
+  const all=synth.getVoices().filter(x=>/^(zh|cmn)/i.test(x.lang)&&!/HK|yue|Cantonese/i.test(x.lang+x.name));
+  const tw=all.filter(x=>/TW|Hant/i.test(x.lang)),cn=all.filter(x=>!/TW|Hant/i.test(x.lang));
+  const isM=x=>MALE_RE.test(x.name),isF=x=>!isM(x)&&FEMALE_RE.test(x.name);
+  const nat=a=>a.slice().sort((x,y)=>(/natural|online/i.test(y.name)?1:0)-(/natural|online/i.test(x.name)?1:0));
+  voiceF=nat(tw).find(isF)||nat(tw).find(x=>!isM(x))||nat(cn).find(isF)||tw[0]||cn[0]||null;
+  voiceM=nat(tw).find(isM)||nat(cn).find(isM)||null;
+  const el=document.getElementById("voiceinfo");if(el)el.innerHTML=voiceInfo()}
+function voiceInfo(){if(TOCFL.audio.size)return `Có ${TOCFL.audio.size} file thu âm sẵn. Câu chưa có file sẽ dùng giọng đọc của máy.`;
+  if(!synth||!(voiceF||voiceM))return "Thiết bị này chưa có giọng đọc tiếng Trung. Hãy dùng máy tính Windows với Edge hoặc Chrome.";
+  return `Giọng nữ: <b>${voiceF?esc(voiceF.name):"không có"}</b> · Giọng nam: <b>${voiceM?esc(voiceM.name):"không có (dùng giọng nữ hạ tông)"}</b>`}
+if(synth){pickVoice();synth.onvoiceschanged=pickVoice}
+const canSpeak=it=>TOCFL.audio.has(it.id)||(synth&&(voiceF||voiceM));
+let player=null,speakGuard=null;
+function stopAudio(){if(player){player.onended=null;player.pause();player=null}if(synth)synth.cancel();clearTimeout(speakGuard)}
+function speak(it,done){stopAudio();let fired=false;const fin=()=>{if(fired)return;fired=true;clearTimeout(speakGuard);done&&done()};
+  // phòng khi trình duyệt không báo "đọc xong": tự coi là xong sau thời lượng ước tính
+  const chars=it.a.reduce((n,[,t])=>n+t.length,0);speakGuard=setTimeout(fin,(chars*320+it.a.length*600+3000));
+  if(TOCFL.audio.has(it.id)){player=new Audio(`audio/${it.id}.mp3`);player.onended=()=>{player=null;fin()};
+    player.play().catch(()=>{player=null;tts(it.a,fin)});return}
+  tts(it.a,fin)}
+function tts(lines,done){if(!synth){done();return}synth.cancel();
+  lines.forEach(([sp,txt],i)=>{const u=new SpeechSynthesisUtterance(txt);
+    const male=sp==="男",v=male?(voiceM||voiceF):(voiceF||voiceM);
+    if(v){u.voice=v;u.lang=v.lang}else u.lang="zh-TW";u.rate=.9;
+    u.pitch=male?(voiceM?1:.7):1.08;
+    if(i===lines.length-1)u.onend=done;synth.speak(u)})}
+const cast=a=>{const n=[...new Set(a.map(x=>x[0]).filter(Boolean))];return n.length>1?`<p class="cast">Người nói: ${n.map(x=>`<b class="zh">${x}</b> (${x==="男"?"nam":"nữ"})`).join(" · ")}</p>`:""};
+const transcript=it=>it.a.map(([s,t])=>`${s&&it.a.length>1?s+"：":""}${esc(t)}`).join("<br>");
+
+/* =================== VẼ MỘT CÂU HỎI (dùng chung cho thi thử và luyện tập) =================== */
+function itemHTML(it,order,listenBox){
+  const opts=it.po
+    ?`<div class="opts pics">${order.map((o,j)=>`<button class="opt" data-i="${o.i}" aria-pressed="false"><span class="k">${"ABCD"[j]}</span>${PICS.svg(o.t,"Hình "+"ABCD"[j])}</button>`).join("")}</div>`
+    :`<div class="opts">${order.map((o,j)=>`<button class="opt" data-i="${o.i}" aria-pressed="false"><span class="k">${"ABCD"[j]}</span><span>${esc(o.t)}</span></button>`).join("")}</div>`;
+  return `${it.s==="L"?listenBox:""}
+   ${it.img?`<div class="figure">${PICS.svg(it.img)}</div>`:""}
+   ${it.s==="R"&&it.t?`<div class="passage">${fmt(it.t)}</div>`:""}
+   <p class="q${isVi(it.q)?" qv":""}">${esc(it.q)}</p>
+   ${opts}`}
+const headBar=(it,extra)=>`<div class="bar"><span class="label">${SEC[it.s].zh} ${SEC[it.s].vi} · <span class="zh">${it.ty}</span></span>${extra||""}</div>`;
+function bindOpts(onPick){app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  app.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",x===b));onPick(+b.dataset.i)})}
+
+/* =================== TRẠNG THÁI =================== */
+let S=null,timer=null;
+function stopAll(){stopAudio();if(timer){clearInterval(timer);timer=null}if(S&&S.cd){clearInterval(S.cd);S.cd=null}clockEl.hidden=true}
+
+/* =================== TRANG CHỦ =================== */
+function home(){stopAll();S=null;stepEl.textContent="";
+  const n=(sec,b)=>BANK.filter(x=>x.s===sec&&(!b||bandOf(x.lv)===b)).length;
+  app.innerHTML=`<section class="card">
+    <span class="label">Chọn chế độ</span>
+    <div class="modes" role="radiogroup">
+      <label><input type="radio" name="mode" value="exam" checked><span><b>Thi thử CAT</b><i>Một bài trải dài 8 cấp, tính giờ, chấm điểm thang 700 như thi thật.</i></span></label>
+      <label><input type="radio" name="mode" value="prac"><span><b>Luyện theo dạng bài</b><i>Chọn cấp và dạng bài, không tính giờ, có đáp án và giải thích ngay.</i></span></label>
+    </div>
+    <div id="opts"></div>
+    <p class="muted small">Ngân hàng hiện có ${n("L")} câu Nghe và ${n("R")} câu Đọc: ${Object.keys(BANDS).map(b=>`${BANDS[b].name} ${n("L",b)+n("R",b)}`).join(" · ")}.</p>
+  </section>`;
+  const draw=()=>val("mode")==="exam"?examSetup():pracSetup();
+  app.querySelectorAll('input[name="mode"]').forEach(r=>r.onchange=draw);draw()}
+
+function examSetup(){const box=document.getElementById("opts");
+  box.innerHTML=`<div style="display:flex;flex-direction:column;gap:14px">
+    <div class="field"><span class="label">Phần thi</span>${seg("secs",[["LR","Nghe rồi Đọc"],["L","Chỉ Nghe"],["R","Chỉ Đọc"]],"LR")}</div>
+    <div class="field"><span class="label">Độ dài</span>${seg("len",Object.entries(LENGTH).map(([k,v])=>[k,`${v.name} <b>${v.L.n}+${v.R.n} câu</b>`]),"full")}</div>
+    <div class="field"><span class="label">Trình độ hiện tại (để chọn câu đầu tiên)</span>${seg("start",Object.keys(BANDS).map(b=>[b,BANDS[b].name]),"A")}</div>
+    <span class="label">Quy tắc như thi thật</span>
+    <ul class="rules" id="rules"></ul>
+    <p class="small muted" id="voiceinfo">${voiceInfo()}</p>
+    <label class="label" for="nm">Họ tên học viên</label>
+    <input type="text" id="nm" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="name">
+    <div class="row"><button class="primary" id="go">Bắt đầu thi thử</button></div></div>`;
+  const rules=()=>{const L=LENGTH[val("len")],secs=val("secs");
+    document.getElementById("rules").innerHTML=[
+      secs.includes("L")?`<li><b>Nghe</b>: ${L.L.n} câu, ${L.L.min} phút. Mỗi câu chỉ phát <b>1 lần</b>; nghe xong có <b>${ANSWER_SECONDS} giây</b> để chọn, hết giờ tự sang câu sau.</li>`:"",
+      secs.includes("R")?`<li><b>Đọc</b>: ${L.R.n} câu, ${L.R.min} phút.${val("len")==="full"?` Làm dưới ${READING_MIN_ITEMS} câu thì điểm bị giảm theo tỉ lệ, nên phân bổ thời gian.`:""}</li>`:"",
+      `<li>Máy chọn câu theo trình độ của bạn: đúng thì câu sau khó hơn, sai thì dễ hơn. Câu có thể thuộc bất kỳ cấp nào.</li>`,
+      `<li>Không quay lại câu trước được. Câu bỏ trống tính là sai.</li>`].join("")};
+  app.querySelectorAll('input[name="secs"],input[name="len"]').forEach(r=>r.onchange=rules);rules();
+  document.getElementById("go").onclick=()=>{
+    const secs=val("secs").split(""),len=LENGTH[val("len")],start=START[val("start")];
+    S={mode:"exam",name:document.getElementById("nm").value.trim(),secs,len,lenKey:val("len"),start,startBand:val("start"),si:0,
+       hist:{L:[],R:[]},used:new Set(),groups:new Set(),done:{},timeUp:{}};
+    startSection()}}
+
+/* =================== THI THỬ =================== */
+function startSection(){const sec=S.secs[S.si];S.sec=sec;S.deadline=Date.now()+S.len[sec].min*60000;
+  clockEl.hidden=false;if(timer)clearInterval(timer);tick();timer=setInterval(tick,1000);nextExam()}
+function tick(){const ms=Math.max(0,S.deadline-Date.now()),m=Math.floor(ms/60000),s=Math.floor(ms%60000/1000);
+  clockEl.textContent=`⏱ ${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  clockEl.classList.toggle("warn",ms<=5*60000);
+  if(ms<=0){S.timeUp[S.sec]=true;endSection()}}
+function endSection(){stopAudio();if(S.cd){clearInterval(S.cd);S.cd=null}if(timer){clearInterval(timer);timer=null}clockEl.hidden=true;
+  S.done[S.sec]=Math.round((S.len[S.sec].min*60000-Math.max(0,S.deadline-Date.now()))/60000);
+  S.si++;if(S.si<S.secs.length)between();else results()}
+
+function pickExam(sec,t){const hist=S.hist[sec],tc={};hist.forEach(h=>tc[h.item.ty]=(tc[h.item.ty]||0)+1);
+  const target=Math.min(8,Math.max(1,Math.round(t)));
+  for(const d of [0,1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7]){const lv=target+d;if(lv<1||lv>8)continue;
+    let pool=BANK.filter(i=>i.s===sec&&i.lv===lv&&!S.used.has(i.ix)&&!(i.g&&S.groups.has(i.g)));
+    if(!pool.length)continue;
+    const min=Math.min(...pool.map(i=>tc[i.ty]||0));pool=pool.filter(i=>(tc[i.ty]||0)===min);
+    return pool[Math.floor(Math.random()*pool.length)]}
+  return null}
+
+function nextExam(){const sec=S.sec,hist=S.hist[sec];
+  if(hist.length>=S.len[sec].n){endSection();return}
+  S.theta=theta(hist,S.start);
+  const it=pickExam(sec,S.theta);if(!it){endSection();return}
+  S.used.add(it.ix);if(it.g)S.groups.add(it.g);
+  S.cur={item:it,order:shuffle(it.o.map((t,i)=>({t,i})))};S.choice=null;renderExam()}
+
+function renderExam(){const it=S.cur.item,sec=S.sec,n=S.hist[sec].length+1,N=S.len[sec].n;
+  stepEl.textContent=`${SEC[sec].vi} · ${n}/${N}`;
+  const listenBox=`<div class="play"><button class="ghost" id="pl" hidden>▶ Nghe</button><span class="small muted" id="pst">Đang phát…</span><span class="count" id="cd" hidden></span>
+     ${!canSpeak(it)?`<span class="notice">Thiết bị này không đọc được tiếng Trung. Hãy dùng Chrome/Edge trên máy tính, hoặc nhờ giáo viên đọc. <button class="ghost" id="tr" style="padding:4px 10px;margin-left:4px">Hiện lời thoại</button></span>`:""}</div>
+     ${cast(it.a||[])}<div class="transcript" id="tx" hidden>${it.s==="L"?transcript(it):""}</div>`;
+  app.innerHTML=`<section class="card">${headBar(it,`<span class="meter">${meter(Math.round(Math.min(8,Math.max(1,S.theta))))}</span>`)}
+    ${itemHTML(it,S.cur.order,listenBox)}
+    <div class="row"><button class="primary" id="nx" disabled>${n===N?"Hoàn thành phần này":"Câu tiếp theo"}</button></div></section>`;
+  bindOpts(i=>{S.choice=i;document.getElementById("nx").disabled=false});
+  document.getElementById("nx").onclick=answerExam;
+  if(it.s==="L"){const tr=document.getElementById("tr");if(tr)tr.onclick=()=>{document.getElementById("tx").hidden=false;tr.remove();startCountdown()};
+    const pl=document.getElementById("pl"),pst=document.getElementById("pst");
+    const play=()=>{pl.hidden=true;pst.hidden=false;pst.textContent="Đang phát…";speak(it,()=>{pst.textContent="Đã phát xong, hãy chọn đáp án";startCountdown()})};
+    pl.onclick=play;
+    if(canSpeak(it))setTimeout(()=>{if(S&&S.cur&&S.cur.item===it)play()},500);else pst.hidden=true}}
+
+function startCountdown(){if(S.cd)return;let left=ANSWER_SECONDS;const el=document.getElementById("cd");if(!el)return;
+  el.hidden=false;el.textContent=`⏱ ${left}s`;
+  S.cd=setInterval(()=>{left--;el.textContent=`⏱ ${left}s`;if(left<=0){clearInterval(S.cd);S.cd=null;answerExam()}},1000)}
+
+function answerExam(){stopAudio();if(S.cd){clearInterval(S.cd);S.cd=null}
+  const it=S.cur.item,ok=S.choice===0;
+  S.hist[S.sec].push({item:it,chosen:S.choice,ok,theta:S.theta});nextExam()}
+
+function between(){stepEl.textContent=`Hết phần ${SEC[S.secs[S.si-1]].vi}`;
+  app.innerHTML=`<section class="card"><span class="label">Xong phần ${S.si}/${S.secs.length}</span>
+   <h2>Phần Nghe đã xong. Tiếp theo là phần Đọc.</h2>
+   <p class="muted">Phần Đọc có ${S.len.R.n} câu trong ${S.len.R.min} phút. Đồng hồ chỉ bắt đầu khi bạn bấm nút.</p>
+   <div class="row"><button class="primary" id="go">Bắt đầu phần Đọc</button></div></section>`;
+  document.getElementById("go").onclick=startSection}
+
+/* =================== KẾT QUẢ THI THỬ =================== */
+function trace(hist,N){if(!hist.length)return `<p class="muted">Chưa làm câu nào.</p>`;
+  const W=320,H=150,px=58,py=10,xs=(W-px-10)/Math.max(1,N-1),y=l=>py+(8-l)*((H-py*2-14)/7);
+  const pts=hist.map((h,i)=>[px+i*xs,y(h.item.lv)]);
+  return `<svg class="trace" viewBox="0 0 ${W} ${H}" role="img" aria-label="Cấp của từng câu đã làm">
+   ${[1,2,3,4,5,6,7,8].map(l=>`<line class="grid" x1="${px}" x2="${W-10}" y1="${y(l)}" y2="${y(l)}"/><text x="2" y="${y(l)+3}">${["","準備1","準備2","A1","A2","B1","B2","C1","C2"][l]}</text>`).join("")}
+   <polyline class="path" points="${pts.map(p=>p.join(",")).join(" ")}"/>
+   ${pts.map((p,i)=>`<circle class="${hist[i].ok?"dot-ok":"dot-bad"}" cx="${p[0]}" cy="${p[1]}" r="3.5"/>`).join("")}
+   ${pts.map((p,i)=>(i%5===0||i===pts.length-1)?`<text x="${p[0]-3}" y="${H-2}">${i+1}</text>`:"").join("")}</svg>`}
+function typeTable(all){const rows=["L","R"].flatMap(s=>TYPES[s].map(ty=>{const h=all.filter(x=>x.item.s===s&&x.item.ty===ty);if(!h.length)return "";
+    const c=h.filter(x=>x.ok).length,p=Math.round(c/h.length*100);
+    return `<tr><td>${SEC[s].vi}</td><td class="zht">${ty}</td><td>${c}/${h.length}</td><td><div class="barcell"><div class="hbar"><span style="width:${p}%"></span></div>${p}%</div></td></tr>`})).join("");
+  return `<div class="tbl"><table><thead><tr><th>Phần</th><th>Dạng bài</th><th>Đúng</th><th>Tỉ lệ</th></tr></thead><tbody>${rows}</tbody></table></div>`}
+function stemOf(it,short){if(it.s==="L")return it.a.map(([sp,t])=>(sp&&it.a.length>1?sp+"：":"")+t).join(" ");
+  const t=[it.img?`[Hình: ${PICS.alt(it.img)}]`:"",it.t?plain(it.t).replace(/\n/g," "):""].filter(Boolean).join(" ");
+  return short&&t.length>60?t.slice(0,60)+"…":t}
+function reviewHTML(all){return all.map(h=>{const it=h.item;
+  return `<div><span class="${h.ok?"tag-ok":"tag-bad"}">${h.ok?"Đúng":h.chosen===null?"Bỏ trống":"Sai"}</span> · ${SEC[it.s].vi} · <span class="zh">${it.ty}</span> · ${LV[it.lv]}
+    <div class="zhs">${esc(stemOf(it))} <b>${esc(it.q)}</b></div>
+    <div class="zhs">Đáp án: ${esc(optText(it,0))}${h.ok?"":h.chosen===null?"":` · Đã chọn: ${esc(optText(it,h.chosen))}`}</div>
+    ${it.ex?`<div class="muted">${esc(it.ex)}</div>`:""}</div>`}).join("")}
+
+function secResult(sec){const h=S.hist[sec];if(!S.secs.includes(sec))return null;
+  const t=theta(h,S.start);let sc=score700(sec,t);const answered=h.filter(x=>x.chosen!==null).length;
+  let adj=false;if(sec==="R"&&S.lenKey==="full"&&answered<READING_MIN_ITEMS){sc=Math.round(sc*answered/READING_MIN_ITEMS);adj=true}
+  const k=passed(sec,sc);return{sec,t,sc,k,answered,adj,right:h.filter(x=>x.ok).length,n:h.length}}
+
+function results(){stopAll();stepEl.textContent="Kết quả";
+  const R=S.secs.map(secResult),all=[...S.hist.L,...S.hist.R];
+  const card=r=>`<div class="card"><span class="label">${SEC[r.sec].zh} ${SEC[r.sec].vi}${S.timeUp[r.sec]?" · hết giờ":""}</span>
+     <div class="row"><span class="big">${r.sc}<small class="muted" style="font-size:16px">/700</small></span><span class="pill zh">${r.k?LV[r.k]:"Chưa đạt 準備一級"}</span></div>
+     <p class="muted small">Đúng ${r.right}/${r.n} câu · làm ${r.n}/${S.len[r.sec].n} câu trong ${Math.min(S.done[r.sec]||0,S.len[r.sec].min)} phút${r.adj?` · <b>điểm đã giảm vì làm dưới ${READING_MIN_ITEMS} câu</b>`:""}</p>
+     ${trace(S.hist[r.sec],S.len[r.sec].n)}
+     <p class="muted small">Đường đi: cấp của câu máy chọn cho bạn. Chấm xanh đúng, vòng đỏ sai.${r.k<8?` Mốc cấp kế tiếp (${LV[r.k+1]}): ${CUT[r.sec][r.k]} điểm.`:""}</p></div>`;
+  app.innerHTML=`<div style="display:flex;flex-direction:column;gap:16px">
+   <section class="card"><span class="label">Kết quả thi thử · ${LENGTH[S.lenKey].name}</span>
+    <h1>${S.name?esc(S.name):"Học viên"}</h1>
+    <p class="muted">${new Date().toLocaleString("vi-VN")}</p>
+    <p id="sendst" class="muted small">${SHEET_URL?"Đang gửi kết quả cho giáo viên…":"Chụp màn hình này gửi giáo viên."}</p></section>
+   <div class="stats">${R.map(card).join("")}</div>
+   <section class="card"><h2>Theo dạng bài</h2>${typeTable(all)}
+    <details><summary>Cách tính điểm</summary><div class="rev"><div>
+      Máy ước lượng trình độ từ việc bạn làm đúng câu ở cấp nào (mô hình IRT), rồi đổi ra thang 700 theo các mốc đạt chính thức của bài thi thích ứng:
+      Nghe ${CUT.L.join(" / ")}, Đọc ${CUT.R.join(" / ")} (lần lượt ${Object.values(LV).map(x=>x.split(" ")[0]).join(" · ")}).
+      <br><b>Đây là điểm ước tính để luyện tập</b>; độ khó câu hỏi do giáo viên gán, chưa được hiệu chỉnh thống kê như đề thật.</div></div></details>
+    <details><summary>Xem lại từng câu</summary><div class="rev">${reviewHTML(all)}</div></details></section>
+   <div class="row"><button class="ghost" id="again">Về trang đầu</button></div></div>`;
+  document.getElementById("again").onclick=home;
+  sendResult(R,all)}
+
+function sendResult(R,all){if(!SHEET_URL||S.sent)return;S.sent=true;
+  const get=s=>R.find(r=>r.sec===s);
+  const secCols=s=>{const r=get(s);return r?[[`${SEC[s].vi} /700`,r.sc],[`Cấp ${SEC[s].vi}`,r.k?LV[r.k]:"Chưa đạt"],[`${SEC[s].vi} đúng`,`${r.right}/${r.n}`]]:[[`${SEC[s].vi} /700`,""],[`Cấp ${SEC[s].vi}`,""],[`${SEC[s].vi} đúng`,""]]};
+  const byType=["L","R"].flatMap(s=>TYPES[s].map(ty=>{const h=all.filter(x=>x.item.s===s&&x.item.ty===ty);return h.length?`${ty} ${h.filter(x=>x.ok).length}/${h.length}`:""})).filter(Boolean).join(" · ");
+  const wrong=all.filter(h=>!h.ok).map(h=>{const it=h.item;
+    return `${SEC[it.s].vi} ${it.ty} ${LV[it.lv].split(" ")[0]} [${it.id}] · 「${stemOf(it,true)}」${isVi(it.q)?"":" "+it.q} → ${h.chosen===null?"bỏ trống":"chọn "+optText(it,h.chosen)} (đúng: ${optText(it,0)})`}).join("\n");
+  const d={sheet:SHEET_NAME,cols:[["Họ tên",S.name||"(không tên)"],["Độ dài",LENGTH[S.lenKey].name],["Xuất phát",BANDS[S.startBand].name],
+    ...secCols("L"),...secCols("R"),["Theo dạng bài",byType],["Hết giờ?",S.secs.filter(s=>S.timeUp[s]).map(s=>SEC[s].vi).join(", ")||"Không"],["Các câu sai",wrong]]};
+  const st=document.getElementById("sendst");
+  fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)})
+    .then(()=>{if(st)st.textContent="✓ Đã gửi kết quả cho giáo viên."})
+    .catch(()=>{S.sent=false;if(st)st.textContent="Chưa gửi được kết quả (mất mạng?). Hãy chụp màn hình này gửi giáo viên."})}
+
+/* =================== LUYỆN THEO DẠNG BÀI =================== */
+function pracSetup(){const box=document.getElementById("opts");
+  box.innerHTML=`<div style="display:flex;flex-direction:column;gap:14px">
+    <div class="field"><span class="label">Cấp</span>${seg("band",Object.keys(BANDS).map(b=>[b,BANDS[b].name]),"A")}</div>
+    <div class="field"><span class="label">Kỹ năng</span>${seg("sk",[["L","聽力 Nghe"],["R","閱讀 Đọc"]],"L")}</div>
+    <div class="field"><span class="label">Dạng bài</span><div id="tyBox"></div></div>
+    <p class="small muted" id="voiceinfo">${voiceInfo()}</p>
+    <div class="row"><button class="primary" id="go">Bắt đầu luyện</button></div></div>`;
+  const pool=(b,s,ty)=>BANK.filter(x=>bandOf(x.lv)===b&&x.s===s&&(ty==="*"||x.ty===ty));
+  const drawTypes=()=>{const b=val("band"),s=val("sk"),cur=val("ty");
+    const opts=[["*",`Tất cả <b>${pool(b,s,"*").length}</b>`],...TYPES[s].map(ty=>{const c=pool(b,s,ty).length;return [ty,`<span class="zh">${ty}</span> <b>${c}</b>`,!c]})];
+    const keep=opts.find(o=>o[0]===cur&&!o[2])?cur:"*";
+    document.getElementById("tyBox").innerHTML=seg("ty",opts,keep)+`<p class="small muted" id="tyHint" style="margin-top:6px"></p>`;
+    const hint=()=>{const t=val("ty");document.getElementById("tyHint").textContent=t==="*"?"Trộn đủ các dạng của cấp này.":TYPE_VI[t]};
+    app.querySelectorAll('input[name="ty"]').forEach(r=>r.onchange=hint);hint();
+    document.getElementById("go").disabled=!pool(b,s,"*").length};
+  app.querySelectorAll('input[name="band"],input[name="sk"]').forEach(r=>r.onchange=drawTypes);drawTypes();
+  document.getElementById("go").onclick=()=>{const b=val("band"),s=val("sk"),ty=val("ty");
+    // xáo thứ tự nhưng giữ các câu cùng một đoạn văn/hội thoại (g) đi liền nhau
+    const items=pool(b,s,ty),groups={};items.forEach(x=>{const k=x.g||"#"+x.ix;(groups[k]=groups[k]||[]).push(x)});
+    S={mode:"prac",band:b,sk:s,ty,list:shuffle(Object.values(groups)).flat(),i:0,hist:[]};nextPrac()}}
+
+function nextPrac(){if(S.i>=S.list.length){pracSummary();return}
+  const it=S.list[S.i];S.cur={item:it,order:shuffle(it.o.map((t,i)=>({t,i})))};S.choice=null;S.checked=false;renderPrac()}
+
+function renderPrac(){const it=S.cur.item,n=S.i+1,N=S.list.length,right=S.hist.filter(h=>h.ok).length;
+  stepEl.textContent=`Luyện · ${n}/${N}`;
+  const listenBox=`<div class="play"><button class="ghost" id="pl">▶ Nghe</button>
+      ${!canSpeak(it)?`<span class="notice">Thiết bị này không đọc được tiếng Trung. Bấm "Hiện lời thoại" để đọc thay.</span>`:""}
+      <button class="ghost" id="trb">Hiện lời thoại</button></div>
+     ${cast(it.a||[])}<div class="transcript" id="tx" hidden>${it.s==="L"?transcript(it):""}</div>`;
+  app.innerHTML=`<section class="card">${headBar(it,`<span class="pill zh">${LV[it.lv]}</span>`)}
+    ${itemHTML(it,S.cur.order,listenBox)}
+    <div id="fb"></div>
+    <div class="row"><button class="primary" id="nx" disabled>Kiểm tra</button><button class="ghost" id="end">Kết thúc</button>
+      <span class="muted small" id="tally" style="margin-left:auto">Đúng ${right}/${S.hist.length}</span></div></section>`;
+  bindOpts(i=>{if(S.checked)return;S.choice=i;document.getElementById("nx").disabled=false});
+  document.getElementById("nx").onclick=()=>S.checked?(S.i++,nextPrac()):checkPrac();
+  document.getElementById("end").onclick=()=>{stopAudio();pracSummary()};
+  if(it.s==="L"){const pl=document.getElementById("pl");pl.onclick=()=>{pl.disabled=true;speak(it,()=>{pl.disabled=false})};
+    document.getElementById("trb").onclick=e=>{const tx=document.getElementById("tx");tx.hidden=!tx.hidden;e.target.textContent=tx.hidden?"Hiện lời thoại":"Ẩn lời thoại"};
+    if(canSpeak(it))setTimeout(()=>{if(S&&S.cur&&S.cur.item===it)pl.click()},400)}}
+
+function checkPrac(){const it=S.cur.item,ok=S.choice===0;S.checked=true;S.hist.push({item:it,chosen:S.choice,ok});
+  app.querySelectorAll(".opt").forEach(b=>{const i=+b.dataset.i;b.disabled=true;if(i===0)b.classList.add("right");else if(i===S.choice)b.classList.add("wrong")});
+  if(it.s==="L"){document.getElementById("tx").hidden=false;const t=document.getElementById("trb");if(t)t.remove()}
+  document.getElementById("fb").innerHTML=`<div class="feedback ${ok?"ok":"bad"}"><b>${ok?"Đúng rồi!":"Chưa đúng."} Đáp án: <span class="zh">${esc(optText(it,0))}</span></b>${it.ex?`<span>${esc(it.ex)}</span>`:""}</div>`;
+  document.getElementById("tally").textContent=`Đúng ${S.hist.filter(h=>h.ok).length}/${S.hist.length}`;
+  const nx=document.getElementById("nx");nx.textContent=S.i+1>=S.list.length?"Xem tổng kết":"Câu tiếp theo";nx.focus()}
+
+function pracSummary(){stopAll();stepEl.textContent="Tổng kết luyện tập";const h=S.hist,c=h.filter(x=>x.ok).length;
+  app.innerHTML=`<div style="display:flex;flex-direction:column;gap:16px">
+   <section class="card"><span class="label">Luyện ${BANDS[S.band].name} · ${SEC[S.sk].vi} · ${S.ty==="*"?"tất cả dạng":`<span class="zh">${S.ty}</span>`}</span>
+    <div class="row"><span class="big">${c}<small class="muted" style="font-size:16px">/${h.length}</small></span><span class="pill">${h.length?Math.round(c/h.length*100):0}% đúng</span></div>
+    ${h.length?typeTable(h):`<p class="muted">Chưa làm câu nào.</p>`}
+    ${h.some(x=>!x.ok)?`<details open><summary>Các câu làm sai</summary><div class="rev">${reviewHTML(h.filter(x=>!x.ok))}</div></details>`:""}</section>
+   <div class="row"><button class="primary" id="again">Luyện tiếp</button><button class="ghost" id="home">Về trang đầu</button></div></div>`;
+  document.getElementById("again").onclick=()=>{home();app.querySelector('input[name="mode"][value="prac"]').click()};
+  document.getElementById("home").onclick=home}
+
+home();
+</script>
+</body>
+</html>
