@@ -1,8 +1,28 @@
-# Kho đề TOCFL CAT
+# Tiếng Trung Phồn Thể TOCFL
 
-Trang luyện thi TOCFL (Nghe + Đọc, từ 準備級 đến 精通級) cho học viên. Chạy hoàn toàn trên trình duyệt, đăng lên GitHub Pages là dùng được.
+Website học và luyện thi TOCFL cho học viên du học Đài Loan, gồm 4 phần dùng chung một thanh menu và một bộ màu (theo màu web IEC duhociec.site):
 
-## Hai chế độ
+| Địa chỉ | Phần |
+|---|---|
+| `/` | Trang chủ: lộ trình 4 bước, dẫn vào các phần |
+| `/kiem-tra/` | Kiểm tra đầu vào Mini-CAT (當代中文 Quyển 1, bài 1–5), chép từ repo `tocfl-l1-5` |
+| `/bo-thu/` | 214 bộ thủ: Tra cứu, Thẻ ghi nhớ, Kiểm tra nhanh |
+| `/luyen-thi/` | Kho đề TOCFL CAT (thi thử + luyện dạng bài) |
+
+Chạy hoàn toàn trên trình duyệt, đăng lên GitHub Pages là dùng được.
+
+## Phần dùng chung
+
+- `assets/site.css`: màu sắc, font, kiểu thanh menu và chân trang. **Đổi màu ở đây là mọi trang đổi theo.**
+- `assets/site.js`: vẽ thanh menu và chân trang. Thêm hoặc đổi tên mục menu ở mảng `NAV`.
+- Mỗi trang nạp `site.css` ở đầu và `site.js` ở cuối `<body>`.
+- Trang `luyen-thi/` có dòng `<base href="../">` để vẫn đọc được `bank/`, `audio/`, `pics.js` ở thư mục gốc. Đừng xóa dòng này.
+
+## Bộ thủ
+
+Dữ liệu 214 bộ nằm ở `bo-thu/data.js`, mỗi dòng một bộ (hướng dẫn các cột ở đầu file). Tiến độ thẻ ghi nhớ lưu trên máy của từng học sinh.
+
+## Kho đề: hai chế độ
 
 - **Thi thử CAT**: mô phỏng bài thi thích ứng thật. Nghe khoảng 35 câu trong 50 phút, Đọc khoảng 35 câu trong 60 phút (có bản rút gọn 20+20 câu). Máy chọn câu theo trình độ, câu Nghe chỉ phát 1 lần và có 10 giây để chọn, không quay lại được. Cuối bài ra điểm ước tính thang 700 và cấp đạt theo mốc chính thức của 華測會, rồi tự gửi kết quả về Google Sheet.
 - **Luyện theo dạng bài**: chọn cấp (Novice / A / B / C), kỹ năng và dạng bài; không tính giờ; chọn xong có đáp án và giải thích tiếng Việt.
@@ -10,7 +30,7 @@ Trang luyện thi TOCFL (Nghe + Đọc, từ 準備級 đến 精通級) cho h�
 ## Cấu trúc thư mục
 
 ```
-index.html        giao diện + cách chấm (cấu hình ở đầu phần <script>)
+luyen-thi/index.html  giao diện + cách chấm (cấu hình ở đầu phần <script>)
 pics.js           hình minh họa vẽ bằng SVG
 bank/novice.js    câu hỏi 準備級 (lv 1–2)
 bank/a.js         câu hỏi Band A (lv 3–4)
@@ -71,7 +91,7 @@ Script tạo `audio/<id>.mp3` (giọng nữ HsiaoChen, giọng nam YunJhe) và c
 
 ## Gửi kết quả về Google Sheet
 
-`SHEET_URL` trong `index.html` đang dùng chung Apps Script với Mini-CAT, gửi vào trang tính tên `Thi thử TOCFL` (sửa ở `SHEET_NAME`). Mỗi lần thi thử thêm một dòng: họ tên, điểm và cấp từng phần, tỉ lệ đúng theo dạng bài, danh sách câu sai (có mã câu để tra lại). Để trống `SHEET_URL` nếu không muốn gửi.
+`SHEET_URL` trong `luyen-thi/index.html` đang dùng chung Apps Script với Mini-CAT, gửi vào trang tính tên `Thi thử TOCFL` (sửa ở `SHEET_NAME`). Mỗi lần thi thử thêm một dòng: họ tên, điểm và cấp từng phần, tỉ lệ đúng theo dạng bài, danh sách câu sai (có mã câu để tra lại). Để trống `SHEET_URL` nếu không muốn gửi.
 
 ## Lưu ý
 
