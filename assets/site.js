@@ -73,6 +73,7 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
     foot.className = "site-foot";
     foot.innerHTML =
       '<div class="in"><span>Tiếng Trung Phồn Thể TOCFL · <a href="' + root + 'chinh-sach/">Chính sách &amp; Điều khoản</a></span>' +
+      '<span>Liên hệ: <a href="tel:+886965120883">+886 965 120 883</a> · <a href="https://zaloapp.com/qr/p/fwe9543sjn08" target="_blank" rel="noopener">Zalo</a></span>' +
       '<span>Tư vấn du học Đài Loan: <a href="https://www.duhociec.site/" target="_blank" rel="noopener">duhociec.site</a></span></div>';
     document.body.append(foot);
   }
