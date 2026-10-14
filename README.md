@@ -10,7 +10,7 @@ Website học và luyện thi TOCFL cho học viên du học Đài Loan, gồm 5
 | `/luyen-thi/` | Kho đề TOCFL CAT (thi thử + luyện dạng bài) |
 | `/tai-lieu/` | Tài liệu học tiếng Trung: danh sách tài liệu đọc thêm |
 | `/tai-lieu/thanh-ngu/` | Kho thành ngữ, tục ngữ & 文言文 (tìm kiếm, lọc theo phần) |
-| `/tai-lieu/tu-vung/` | 8000 Từ Vựng Tiếng Trung: 7.517 từ theo 7 cấp, có nghĩa và ví dụ (tìm kiếm, lọc theo cấp, tải Excel) |
+| `/tai-lieu/tu-vung/` | Bảng hơn 7000 Từ Vựng Trong Tiếng Trung: 7.517 từ theo 7 cấp, có nghĩa và ví dụ (tìm kiếm, lọc theo cấp, tải Excel) |
 
 Chạy hoàn toàn trên trình duyệt, đăng lên GitHub Pages là dùng được.
 
@@ -31,7 +31,7 @@ Mỗi tài liệu là một thư mục trong `tai-lieu/`. Thêm tài liệu mớ
 
 Kho thành ngữ: nội dung nằm ở `tai-lieu/thanh-ngu/data.js`, mỗi dòng một câu (hướng dẫn các cột ở đầu file). Tên nhóm và tên cột của từng nhóm nằm ở `TL_NHOM` trong cùng file.
 
-8000 Từ Vựng Tiếng Trung: nội dung nằm ở `tai-lieu/tu-vung/data.js`, mỗi dòng một từ (hướng dẫn 9 cột ở đầu file). File Excel để tải về là `tai-lieu/tu-vung/tu-vung-tocfl-8000.xlsx`; khi sửa từ, nhớ sửa cả hai cho khớp.
+Bảng hơn 7000 Từ Vựng Trong Tiếng Trung: nội dung nằm ở `tai-lieu/tu-vung/data.js`, mỗi dòng một từ (hướng dẫn 9 cột ở đầu file). File Excel để tải về là `tai-lieu/tu-vung/tu-vung-tocfl-8000.xlsx`; khi sửa từ, nhớ sửa cả hai cho khớp.
 
 ## Kho đề: hai chế độ
 
