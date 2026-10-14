@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Từ vựng TOCFL 8000</title>
+<meta name="description" content="7.517 từ vựng TOCFL (華語八千詞 bản 2.0) chia theo 7 cấp, có pinyin, từ loại, nghĩa tiếng Việt và câu ví dụ.">
+<link rel="stylesheet" href="../../assets/site.css">
+<style>
+/* Cùng bố cục với trang Ngữ pháp: thanh tìm kiếm + lọc cấp (dính trên cùng) → lưới thẻ.
+   Nội dung nằm ở data.js cùng thư mục. Danh sách dài nên mỗi lần chỉ hiện một trang, bấm "Xem thêm" để hiện tiếp. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55}
+[hidden]{display:none!important}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:16px;padding-block:28px 0}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.crumb{font-size:13px;color:var(--muted);margin-bottom:10px}
+.crumb a{color:var(--accent)}
+.top{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{margin:0;font-family:var(--f-display);font-size:clamp(28px,4.5vw,40px);line-height:1.15;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:66ch}
+.dl{align-self:flex-start;margin-top:6px;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--accent);font-weight:600;font-size:14px;text-decoration:none}
+.dl:hover{background:var(--accent-soft)}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;margin-top:18px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-width:0}
+input[type=search]{font:inherit;flex:1 1 260px;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin;min-width:0}
+.chip{flex:none;font:inherit;font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-family:var(--f-zh)}
+.chip small{font-family:var(--f-num);opacity:.75;margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.group{margin-top:28px}
+.group h2{margin:0 0 4px;font-size:18px;font-weight:600;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.group h2 .p{font-family:var(--f-zh);font-size:14px;color:#fff;background:var(--brand);border-radius:6px;padding:1px 8px}
+.group h2 .n{font-size:13px;font-weight:400;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.item .hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
+.item .zh{font-family:var(--f-zh);font-size:26px;line-height:1.3;font-weight:500;overflow-wrap:anywhere}
+.item .py{font-size:15px;color:var(--accent)}
+.item .tags{display:flex;gap:6px;flex-wrap:wrap}
+.item .tag{font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px}
+.item .tag.zh2{font-family:var(--f-zh)}
+.item dl{margin:0;display:grid;gap:6px}
+.item dl div{display:grid;grid-template-columns:minmax(0,72px) minmax(0,1fr);gap:8px}
+.item dt{font-size:12px;color:var(--muted);padding-top:2px}
+.item dd{margin:0;overflow-wrap:anywhere}
+.item dd.vi{font-weight:600}
+.item dd.ex{font-family:var(--f-zh);font-size:16px}
+.item dd.tr{color:var(--muted)}
+.item .zh2{font-family:var(--f-zh)}
+.more{display:flex;justify-content:center;margin-top:20px}
+.more button{font:inherit;font-weight:600;font-size:15px;padding:12px 22px;border-radius:8px;border:0;background:var(--brand);color:#fff;cursor:pointer}
+.more button:hover{background:var(--accent)}
+.empty{padding:40px 0;color:var(--muted);text-align:center}
+.note{margin:28px 0 0;font-size:13px;color:var(--muted);max-width:80ch}
+@media (max-width:420px){.grid{grid-template-columns:minmax(0,1fr)}.item dl div{grid-template-columns:minmax(0,64px) minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="crumb"><a href="../">Tài liệu học tiếng Trung</a> / Từ vựng TOCFL 8000</div>
+  <div class="top">
+    <span class="eyebrow">Tài liệu học tiếng Trung</span>
+    <h1>Từ vựng TOCFL 8000</h1>
+    <p class="lede">7.517 từ trong bảng 華語八千詞 (bản 2.0), chia theo 7 cấp từ 準備級 đến 流利級. Mỗi từ có pinyin, từ loại, nghĩa tiếng Việt, câu ví dụ và mẹo dùng. Em chọn cấp đang học, hoặc gõ chữ Hán, pinyin (có dấu hay không dấu đều được) hay nghĩa tiếng Việt để tìm.</p>
+    <a class="dl" href="tu-vung-tocfl-8000.xlsx" download>Tải bản Excel</a>
+  </div>
+
+  <div class="bar">
+    <div class="row">
+      <input type="search" id="q" placeholder="Tìm chữ Hán, pinyin hoặc nghĩa tiếng Việt…" aria-label="Tìm kiếm" autocomplete="off">
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Lọc theo cấp"></div>
+  </div>
+
+  <div id="list"></div>
+  <div class="more" id="more" hidden><button type="button">Xem thêm</button></div>
+  <p class="empty" id="empty" hidden>Không tìm thấy từ nào. Em thử gõ từ khác, hoặc chọn "Tất cả cấp".</p>
+  <p class="note">Từ loại theo ký hiệu của bảng gốc: N danh từ · V động từ · Vs tính từ/động từ trạng thái · Vi nội động từ · Vp, Vpt động từ quá trình · Vst động từ trạng thái có tân ngữ · Vaux động từ năng nguyện · Adv phó từ · Prep giới từ · Conj liên từ · M lượng từ · Det định từ · Ptc trợ từ · V-sep động từ ly hợp.</p>
+</main>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  var CAP = window.TV_CAP, STEP = 120;
+  function plain(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/\s+/g, " ");
+  }
+  var items = window.TV_RAW.trim().split("\n").map(function (line) {
+    var c = line.split("|");
+    return { lv: c[0], w: c[1], py: c[2], pos: c[3], vi: c[4], ex: c[5], tr: c[6], tip: c[7], topic: c[8],
+      key: plain(c[1] + " " + c[2] + " " + c[2].replace(/\s/g, "") + " " + c[4] + " " + c[8]) };
+  }).filter(function (it) { return CAP[it.lv]; });
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
+  function mix(s) {
+    return esc(s).replace(/[㐀-鿿（），、。；：？！「」《》…]+/g, function (m) { return '<span class="zh2" lang="zh-Hant">' + m + "</span>"; });
+  }
+  function card(it) {
+    return '<article class="item">' +
+      '<div class="hd"><span class="zh" lang="zh-Hant">' + esc(it.w) + '</span><span class="py">' + esc(it.py) + "</span></div>" +
+      '<div class="tags"><span class="tag">' + esc(it.pos) + "</span>" +
+      (it.topic ? '<span class="tag zh2" lang="zh-Hant">' + esc(it.topic) + "</span>" : "") + "</div>" +
+      "<dl>" +
+      '<div><dt>Nghĩa</dt><dd class="vi">' + mix(it.vi) + "</dd></div>" +
+      '<div><dt>Ví dụ</dt><dd class="ex" lang="zh-Hant">' + esc(it.ex) + "</dd></div>" +
+      (it.tr ? '<div><dt>Dịch</dt><dd class="tr">' + esc(it.tr) + "</dd></div>" : "") +
+      (it.tip ? "<div><dt>Cách dùng</dt><dd>" + mix(it.tip) + "</dd></div>" : "") +
+      "</dl></article>";
+  }
+
+  // Lọc theo cấp (mặc định cấp đầu tiên để trang mở nhanh)
+  var cap = Object.keys(CAP)[0];
+  var chipsBox = document.getElementById("chips");
+  function total(lv) { return items.filter(function (it) { return it.lv === lv; }).length; }
+  chipsBox.innerHTML = [["all", "Tất cả cấp", items.length]].concat(Object.keys(CAP).map(function (k) { return [k, CAP[k][0], total(k)]; }))
+    .map(function (p) { return '<button type="button" class="chip" data-c="' + p[0] + '" aria-pressed="' + (p[0] === cap) + '">' + esc(p[1]) + "<small>" + p[2] + "</small></button>"; }).join("");
+  chipsBox.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    cap = b.getAttribute("data-c");
+    chipsBox.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    draw();
+  });
+
+  var q = document.getElementById("q"), timer;
+  q.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(draw, 150); });
+
+  var hits = [], shown = 0;
+  var list = document.getElementById("list"), more = document.getElementById("more");
+  more.querySelector("button").addEventListener("click", function () { show(); });
+
+  function draw() {
+    var words = plain(q.value).trim().split(" ").filter(Boolean);
+    hits = items.filter(function (it) {
+      return (cap === "all" || it.lv === cap) && words.every(function (w) { return it.key.indexOf(w) !== -1; });
+    });
+    list.innerHTML = "";
+    shown = 0;
+    show();
+    document.getElementById("empty").hidden = hits.length > 0;
+    document.getElementById("count").textContent = hits.length + " từ";
+  }
+
+  // Hiện thêm một trang thẻ; mỗi cấp là một nhóm có tiêu đề.
+  function show() {
+    var part = hits.slice(shown, shown + STEP), html = "", lv = null, buf = [];
+    function flush() {
+      if (!buf.length) return;
+      var head = list.querySelector('.group[data-lv="' + lv + '"] .grid');
+      if (head) { head.insertAdjacentHTML("beforeend", buf.join("")); }
+      else {
+        var n = hits.filter(function (it) { return it.lv === lv; }).length;
+        html += '<section class="group" data-lv="' + lv + '"><h2><span class="p">' + esc(CAP[lv][0]) + "</span>" + esc(CAP[lv][1]) +
+          '<span class="n">' + n + " từ</span></h2>" + '<div class="grid">' + buf.join("") + "</div></section>";
+      }
+      buf = [];
+    }
+    part.forEach(function (it) {
+      if (it.lv !== lv) { flush(); list.insertAdjacentHTML("beforeend", html); html = ""; lv = it.lv; }
+      buf.push(card(it));
+    });
+    flush();
+    list.insertAdjacentHTML("beforeend", html);
+    shown += part.length;
+    more.hidden = shown >= hits.length;
+    more.querySelector("button").textContent = "Xem thêm " + Math.min(STEP, hits.length - shown) + " từ (còn " + (hits.length - shown) + ")";
+  }
+  draw();
+})();
+</script>
+<script src="../../assets/site.js" data-page="tai-lieu"></script>
+</body>
+</html>
