@@ -78,6 +78,31 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
     document.body.append(foot);
   }
 
+  // ---------- Bấm "Zalo" → hiện mã QR ----------
+  // Link zaloapp.com/qr/... mở trên máy tính chỉ ra trang chủ Zalo, nên mọi link Zalo trên web
+  // đều mở hộp có mã QR (ảnh assets/zalo-qr.png). Muốn đổi mã QR: thay file ảnh đó.
+  var zaloPop = null;
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="zaloapp.com/qr"]');
+    if (!a || a.hasAttribute("data-zalo-direct")) return;
+    e.preventDefault();
+    if (!zaloPop) {
+      zaloPop = document.createElement("dialog");
+      zaloPop.className = "login-pop zalo-pop";
+      zaloPop.setAttribute("aria-labelledby", "zalo-title");
+      zaloPop.innerHTML =
+        '<div class="card"><h1 id="zalo-title">Nhắn Zalo cho cô Xiao Lin</h1>' +
+        '<img src="' + root + 'assets/zalo-qr.png" alt="Mã QR Zalo của Xiao Lin" width="220" height="220">' +
+        "<p>Mở Zalo trên điện thoại → bấm biểu tượng quét mã QR → quét mã này để kết bạn.</p>" +
+        '<p class="small">Đang dùng điện thoại? <a data-zalo-direct href="' + a.href + '" target="_blank" rel="noopener">Mở thẳng ứng dụng Zalo</a></p>' +
+        '<button type="button" class="later">Đóng</button></div>';
+      document.body.append(zaloPop);
+      zaloPop.querySelector(".later").onclick = function () { zaloPop.close(); };
+      zaloPop.addEventListener("click", function (ev) { if (ev.target === zaloPop) zaloPop.close(); }); // bấm ra ngoài để đóng
+    }
+    zaloPop.showModal();
+  });
+
   if (!GOOGLE_CLIENT_ID) return;
 
   // ---------- Tự điền họ tên vào ô “Họ tên học viên” ----------

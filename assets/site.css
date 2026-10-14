@@ -61,6 +61,8 @@ html.need-login body>:not(.site-head):not(.login-gate):not(script){display:none!
 .login-pop::backdrop{background:rgba(30,20,10,.45)}
 .login-pop .later{font:inherit;font-size:14px;border:0;background:none;color:var(--muted);cursor:pointer;text-decoration:underline;padding:4px 8px}
 .login-pop .later:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+/* Hộp mã QR Zalo (dùng chung khung với hộp đăng nhập) */
+.zalo-pop img{width:220px;height:220px;max-width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px}
 /* Link tải cần đăng nhập: ghi chú nhỏ khi chưa đăng nhập */
 html.signed-out a[data-need-login]::after{content:"· cần đăng nhập Gmail";font-weight:400;font-size:12px;color:var(--muted)}
 
