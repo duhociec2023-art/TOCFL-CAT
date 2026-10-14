@@ -3,6 +3,8 @@
 // data-page:  home | kiem-tra | bo-thu | luyen-thi | tai-lieu (để tô sáng mục đang xem)
 // data-foot="0":         không hiện chân trang (trang làm bài)
 // data-login="required": phải đăng nhập Google mới xem được nội dung trang
+// Link tải file có thuộc tính data-need-login (vd. <a href="x.xlsx" download data-need-login>):
+//   chưa đăng nhập thì bấm vào sẽ hiện hộp đăng nhập, đăng nhập xong file tự tải về.
 //
 // ĐĂNG NHẬP GOOGLE: dán Client ID (lấy ở Google Cloud Console) vào GOOGLE_CLIENT_ID.
 // Để trống thì web chạy như cũ: không có nút đăng nhập, không khóa trang nào.
@@ -88,6 +90,7 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
 
   function render() {
     document.documentElement.classList.toggle("need-login", mustLogin && !user);
+    document.documentElement.classList.toggle("signed-out", !user);
     var box = document.getElementById("site-user");
     if (user) {
       box.innerHTML =
@@ -114,6 +117,12 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
     user = { name: p.name || p.email, email: p.email, picture: p.picture || "", until: Date.now() + KEEP_DAYS * 864e5 };
     saveUser(user);
     render();
+    if (pending) { // đang chờ tải file: đóng hộp đăng nhập rồi tải luôn
+      var a = pending;
+      pending = null;
+      if (pop) pop.close();
+      a.click();
+    }
   }
   function signOut() {
     if (window.google && google.accounts) google.accounts.id.disableAutoSelect();
@@ -123,6 +132,40 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
     if (nm) nm.value = "";
     render();
   }
+
+  // ---------- Tải tài liệu phải đăng nhập ----------
+  var pending = null, pop = null;
+  function askLogin(a) {
+    pending = a;
+    if (!pop) {
+      pop = document.createElement("dialog");
+      pop.className = "login-pop";
+      pop.setAttribute("aria-labelledby", "pop-title");
+      pop.innerHTML =
+        '<div class="card"><span class="mk" aria-hidden="true">學</span>' +
+        '<h1 id="pop-title">Đăng nhập để tải tài liệu</h1>' +
+        "<p>Em đăng nhập bằng tài khoản Gmail để tải file về. Không cần tạo tài khoản mới.</p>" +
+        '<div id="pop-btn" class="gbtn"></div>' +
+        '<p class="small">Chưa có Gmail? Tạo miễn phí tại <a href="https://accounts.google.com/signup" target="_blank" rel="noopener">accounts.google.com/signup</a></p>' +
+        '<button type="button" class="later">Để sau</button></div>';
+      document.body.append(pop);
+      pop.querySelector(".later").onclick = function () { pop.close(); };
+      pop.addEventListener("click", function (e) { if (e.target === pop) pop.close(); }); // bấm ra ngoài để đóng
+      pop.addEventListener("close", function () { pending = null; });
+    }
+    pop.showModal();
+    drawPop();
+  }
+  function drawPop() {
+    var b = document.getElementById("pop-btn");
+    if (gsiReady && b && pop.open) google.accounts.id.renderButton(b, { type: "standard", theme: "filled_blue", size: "large", text: "signin_with", shape: "pill", locale: "vi", width: 280 });
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[data-need-login]");
+    if (!a || user) return;
+    e.preventDefault();
+    askLogin(a);
+  });
 
   var gsiReady = false;
   function drawButtons() {
@@ -141,9 +184,10 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
     google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: onSignIn, auto_select: false, ux_mode: "popup" });
     gsiReady = true;
     drawButtons();
+    if (pop) drawPop();
   };
   s.onerror = function () {
-    var b = document.getElementById("gate-btn");
+    var b = document.getElementById("gate-btn") || document.getElementById("pop-btn");
     if (b) b.innerHTML = '<p class="small">Không tải được nút đăng nhập Google. Em kiểm tra mạng rồi tải lại trang.</p>';
   };
   document.head.append(s);
