@@ -1,6 +1,6 @@
 // Thanh menu, đăng nhập Google và chân trang dùng chung. Thêm vào cuối <body> của mỗi trang:
 //   <script src="(đường dẫn tới)/assets/site.js" data-page="bo-thu"></script>
-// data-page:  home | kiem-tra | bo-thu | luyen-thi (để tô sáng mục đang xem)
+// data-page:  home | kiem-tra | bo-thu | luyen-thi | tai-lieu (để tô sáng mục đang xem)
 // data-foot="0":         không hiện chân trang (trang làm bài)
 // data-login="required": phải đăng nhập Google mới xem được nội dung trang
 //
@@ -34,7 +34,8 @@ var GOOGLE_CLIENT_ID = "791697607611-n8s3otagtr7d9cosse03rsc9r2fj3bvn.apps.googl
     ["home", "", "Trang chủ"],
     ["kiem-tra", "kiem-tra/", "Kiểm tra đầu vào"],
     ["bo-thu", "bo-thu/", "Học bộ thủ"],
-    ["luyen-thi", "luyen-thi/", "Luyện thi TOCFL"]
+    ["luyen-thi", "luyen-thi/", "Luyện thi TOCFL"],
+    ["tai-lieu", "tai-lieu/", "Tài liệu học tiếng Trung"]
   ];
   var links = NAV.map(function (n) {
     return '<a href="' + root + n[1] + '"' + (n[0] === page ? ' aria-current="page"' : "") + ">" + n[2] + "</a>";

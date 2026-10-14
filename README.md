@@ -1,6 +1,6 @@
 # Tiếng Trung Phồn Thể TOCFL
 
-Website học và luyện thi TOCFL cho học viên du học Đài Loan, gồm 4 phần dùng chung một thanh menu và một bộ màu (theo màu web IEC duhociec.site):
+Website học và luyện thi TOCFL cho học viên du học Đài Loan, gồm 5 phần dùng chung một thanh menu và một bộ màu (theo màu web IEC duhociec.site):
 
 | Địa chỉ | Phần |
 |---|---|
@@ -8,6 +8,8 @@ Website học và luyện thi TOCFL cho học viên du học Đài Loan, gồm 4
 | `/kiem-tra/` | Kiểm tra đầu vào Mini-CAT (當代中文 Quyển 1, bài 1–5), chép từ repo `tocfl-l1-5` |
 | `/bo-thu/` | 214 bộ thủ: Tra cứu, Thẻ ghi nhớ, Kiểm tra nhanh |
 | `/luyen-thi/` | Kho đề TOCFL CAT (thi thử + luyện dạng bài) |
+| `/tai-lieu/` | Tài liệu học tiếng Trung: danh sách tài liệu đọc thêm |
+| `/tai-lieu/thanh-ngu/` | Kho thành ngữ, tục ngữ & 文言文 (tìm kiếm, lọc theo phần) |
 
 Chạy hoàn toàn trên trình duyệt, đăng lên GitHub Pages là dùng được.
 
@@ -21,6 +23,12 @@ Chạy hoàn toàn trên trình duyệt, đăng lên GitHub Pages là dùng đư
 ## Bộ thủ
 
 Dữ liệu 214 bộ nằm ở `bo-thu/data.js`, mỗi dòng một bộ (hướng dẫn các cột ở đầu file). Tiến độ thẻ ghi nhớ lưu trên máy của từng học sinh.
+
+## Tài liệu học tiếng Trung
+
+Mỗi tài liệu là một thư mục trong `tai-lieu/`. Thêm tài liệu mới: tạo thư mục, rồi chép thêm một thẻ `<article class="card">` trong `tai-lieu/index.html`.
+
+Kho thành ngữ: nội dung nằm ở `tai-lieu/thanh-ngu/data.js`, mỗi dòng một câu (hướng dẫn các cột ở đầu file). Tên nhóm và tên cột của từng nhóm nằm ở `TL_NHOM` trong cùng file.
 
 ## Kho đề: hai chế độ
 

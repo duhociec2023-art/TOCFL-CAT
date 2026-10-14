@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kho thành ngữ, tục ngữ & 文言文</title>
+<meta name="description" content="Kho thành ngữ, tục ngữ, quán dụng ngữ, câu 文言文 và hư từ 書面語 tiếng Trung, có pinyin, Hán Việt, nghĩa tiếng Việt và ví dụ.">
+<link rel="stylesheet" href="../../assets/site.css">
+<style>
+/* Một trang đọc: thanh tìm kiếm + lọc theo phần (dính trên cùng) → từng nhóm là một lưới thẻ.
+   Nội dung nằm ở data.js cùng thư mục. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55}
+[hidden]{display:none!important}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:16px;padding-block:28px 0}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.crumb{font-size:13px;color:var(--muted);margin-bottom:10px}
+.crumb a{color:var(--accent)}
+.top{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{margin:0;font-family:var(--f-display);font-size:clamp(28px,4.5vw,40px);line-height:1.15;text-wrap:balance}
+h1 .han{font-family:var(--f-zh);color:var(--brand);font-weight:700}
+.lede{margin:0;color:var(--muted);max-width:66ch}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;margin-top:18px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-width:0}
+input[type=search]{font:inherit;flex:1 1 260px;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin;min-width:0}
+.chip{flex:none;font:inherit;font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip b{font-family:var(--f-num);font-weight:600;margin-right:4px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.group{margin-top:28px}
+.group h2{margin:0 0 4px;font-size:18px;font-weight:600;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.group h2 .p{font-family:var(--f-num);font-size:13px;color:#fff;background:var(--brand);border-radius:6px;padding:1px 8px}
+.group h2 .n{font-size:13px;font-weight:400;color:var(--muted)}
+.group .gnote{margin:0 0 12px;font-size:14px;color:var(--muted);max-width:80ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.item .zh{font-family:var(--f-zh);font-size:26px;line-height:1.3;font-weight:500;overflow-wrap:anywhere}
+.item .zh.long{font-size:20px}
+.item .py{font-size:14px;color:var(--accent);margin-top:-4px}
+.item .tag{align-self:flex-start;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;font-family:var(--f-zh)}
+.item dl{margin:0;display:grid;gap:4px}
+.item dl div{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);gap:8px}
+.item dt{font-size:12px;color:var(--muted);padding-top:1px}
+.item dd{margin:0;overflow-wrap:anywhere}
+.item dd.vi{font-weight:600}
+.item dd .zh2{font-family:var(--f-zh)}
+.empty{padding:40px 0;color:var(--muted);text-align:center}
+@media (max-width:420px){.grid{grid-template-columns:minmax(0,1fr)}.item dl div{grid-template-columns:minmax(0,84px) minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="crumb"><a href="../">Tài liệu học tiếng Trung</a> / Kho thành ngữ</div>
+  <div class="top">
+    <span class="eyebrow">Tài liệu học tiếng Trung</span>
+    <h1>Kho thành ngữ, tục ngữ &amp; <span class="han">文言文</span></h1>
+    <p class="lede">Cụm 4 chữ, thành ngữ 成語, tục ngữ, quán dụng ngữ, câu 文言文 và hư từ 書面語 hay gặp trong bài đọc. Mỗi câu có pinyin (chuẩn Đài Loan), nghĩa tiếng Việt và ví dụ.</p>
+  </div>
+
+  <div class="bar">
+    <div class="row">
+      <input type="search" id="q" placeholder="Tìm chữ Hán, pinyin hoặc nghĩa tiếng Việt…" aria-label="Tìm kiếm" autocomplete="off">
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Lọc theo phần"></div>
+  </div>
+
+  <div id="list"></div>
+  <p class="empty" id="empty" hidden>Không tìm thấy câu nào. Em thử gõ từ khác, hoặc gõ pinyin không dấu.</p>
+</main>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  var groups = window.TL_NHOM.map(function (g) {
+    return { code: g[0], part: g[1], name: g[2], l1: g[3], l2: g[4], l3: g[5], note: g[6], items: [] };
+  });
+  var byCode = {};
+  groups.forEach(function (g) { byCode[g.code] = g; });
+
+  // Bỏ dấu để tìm được cả khi gõ pinyin / tiếng Việt không dấu
+  function plain(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/\s+/g, " ");
+  }
+  window.TL_RAW.trim().split("\n").forEach(function (line) {
+    var c = line.split("|");
+    if (c.length < 7 || !byCode[c[0]]) return;
+    var it = { zh: c[1], py: c[2], f1: c[3], vi: c[4], f2: c[5], f3: c[6] };
+    it.key = plain(c.slice(1).join(" ")) + " " + plain(c[2]).replace(/ /g, "");
+    byCode[c[0]].items.push(it);
+  });
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
+  // Chỉ phần chữ Hán trong một ô mới dùng font chữ Hán
+  function mix(s) {
+    return esc(s).replace(/[㐀-鿿（），、。；：？！「」《》]+/g, function (m) { return '<span class="zh2" lang="zh-Hant">' + m + "</span>"; });
+  }
+  function field(label, val, cls) {
+    if (!label || !val) return "";
+    return "<div><dt>" + esc(label) + "</dt><dd" + (cls ? ' class="' + cls + '"' : "") + ">" + mix(val) + "</dd></div>";
+  }
+  function card(g, it) {
+    var isLevel = g.l3 === "Cấp";
+    var after = /^=/.test(g.l1); // cột kiểu "= Bạch thoại" đứng sau Nghĩa, như trong tài liệu
+    return '<article class="item">' +
+      '<div class="zh' + (it.zh.length > 8 ? " long" : "") + '" lang="zh-Hant">' + esc(it.zh) + "</div>" +
+      '<div class="py">' + esc(it.py) + "</div>" +
+      "<dl>" +
+      (after ? "" : field(g.l1, it.f1)) +
+      field("Nghĩa", it.vi, "vi") +
+      (after ? field(g.l1, it.f1) : "") +
+      field(g.l2, it.f2) +
+      (isLevel ? "" : field(g.l3, it.f3)) +
+      "</dl>" +
+      (isLevel && it.f3 ? '<span class="tag" title="Cấp trong danh sách từ vựng TOCFL">' + esc(it.f3) + "級</span>" : "") +
+      "</article>";
+  }
+
+  // Nút lọc theo phần
+  var part = "all";
+  var chipsBox = document.getElementById("chips");
+  var parts = [["all", "", "Tất cả"]].concat(Object.keys(window.TL_PHAN).map(function (k) { return [k, k, window.TL_PHAN[k]]; }));
+  chipsBox.innerHTML = parts.map(function (p) {
+    return '<button type="button" class="chip" data-p="' + p[0] + '" aria-pressed="' + (p[0] === part) + '">' +
+      (p[1] ? "<b>" + p[1] + "</b>" : "") + esc(p[2]) + "</button>";
+  }).join("");
+  chipsBox.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    part = b.getAttribute("data-p");
+    chipsBox.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    draw();
+  });
+
+  var q = document.getElementById("q");
+  q.addEventListener("input", draw);
+
+  function draw() {
+    var words = plain(q.value).trim().split(" ").filter(Boolean);
+    var html = "", total = 0;
+    groups.forEach(function (g) {
+      if (part !== "all" && g.part !== part) return;
+      var hits = g.items.filter(function (it) {
+        return words.every(function (w) { return it.key.indexOf(w) !== -1; });
+      });
+      if (!hits.length) return;
+      total += hits.length;
+      html += '<section class="group"><h2><span class="p">' + g.part + "</span>" + esc(g.name) +
+        '<span class="n">' + hits.length + " câu</span></h2>" +
+        (g.note && !words.length ? '<p class="gnote">' + esc(g.note) + "</p>" : "") +
+        '<div class="grid">' + hits.map(function (it) { return card(g, it); }).join("") + "</div></section>";
+    });
+    document.getElementById("list").innerHTML = html;
+    document.getElementById("empty").hidden = total > 0;
+    document.getElementById("count").textContent = total + " câu";
+  }
+  draw();
+})();
+</script>
+<script src="../../assets/site.js" data-page="tai-lieu"></script>
+</body>
+</html>
